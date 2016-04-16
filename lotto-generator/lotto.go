@@ -1,14 +1,68 @@
 package main
 
-import "fmt"
-import "math/rand"
-import "time"
-import "sort"
+import (
+	"bufio"
+	"fmt"
+	_ "io/ioutil"
+	"math/rand"
+	"os"
+	"sort"
+	"time"
+)
+
+type Lotto struct {
+	drawNo, bonusNo int
+	numbers         [6]int
+}
 
 func main() {
 	generatedNumbers := getLottoNumbers()
 
+	lottoNumbers := readLottoData()
+
+	fmt.Println(lottoNumbers)
+
 	printNumbers(generatedNumbers)
+}
+
+func readLottoData() (lottoNumbers []Lotto) {
+	lottoNumbers = make([]Lotto, 0, 700)
+
+	file, err := os.OpenFile(
+		"lotto-data.txt",
+		os.O_RDONLY,
+		os.FileMode(0644),
+	)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+
+	for i := 0; ; i++ {
+		var lotto Lotto
+
+		_, err := fmt.Fscanf(reader, "%d %d %d %d %d %d %d %d\n",
+			&lotto.drawNo,
+			&lotto.numbers[0],
+			&lotto.numbers[1],
+			&lotto.numbers[2],
+			&lotto.numbers[3],
+			&lotto.numbers[4],
+			&lotto.numbers[5],
+			&lotto.bonusNo)
+
+		if err != nil && err.Error() == "EOF" {
+			fmt.Println(err)
+			return
+		}
+
+		lottoNumbers = append(lottoNumbers, lotto)
+	}
 }
 
 func printNumbers(generatedNumbers []int) {
