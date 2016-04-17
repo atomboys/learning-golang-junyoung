@@ -4,15 +4,27 @@ import (
 	"bufio"
 	"fmt"
 	_ "io/ioutil"
+	"math"
 	"math/rand"
 	"os"
 	"sort"
 	"time"
 )
 
+/*
+Lotto : 회차별 추첨 결과 정보
+*/
 type Lotto struct {
 	drawNo, bonusNo int
 	numbers         [6]int
+}
+
+/*
+Stat 통계 정보를 위한 구조체
+*/
+type Stat struct {
+	number int
+	weight float64
 }
 
 func main() {
@@ -22,7 +34,29 @@ func main() {
 
 	fmt.Println(lottoNumbers)
 
+	stat(lottoNumbers)
+
 	printNumbers(generatedNumbers)
+}
+
+func stat(lottoNumbers []Lotto) {
+	stat := make([]Stat, 45, 45)
+
+	for i := range stat {
+		stat[i].number = i + 1
+	}
+
+	maxDrawNo := len(lottoNumbers) + 1
+
+	for _, lotto := range lottoNumbers {
+		for _, number := range lotto.numbers {
+			stat[number-1].weight += math.Pow(float64(lotto.drawNo), 2) / float64(maxDrawNo*maxDrawNo)
+		}
+	}
+
+	for _, number := range stat {
+		fmt.Println(number.number, "\t", math.Log(math.Pow(number.weight, 0.5))-1)
+	}
 }
 
 func readLottoData() (lottoNumbers []Lotto) {

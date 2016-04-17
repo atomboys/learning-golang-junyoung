@@ -1,8 +1,7 @@
-package main
+package study
 
-import _ "fmt"
-
-func main() {
+// NumberType 숫자 타입
+func NumberType() {
 	/*
 	   Go 언어의 숫자 자료형 종류
 	   uint8     8bit unsigned int
@@ -25,23 +24,23 @@ func main() {
 	*/
 
 	// 정수
-	var num1 int = 32
-	var num2 int = -15
-	var num3 int = 0723
-	var num4 int = 0x32fa2c75
+	var _ int = 32
+	var _ int = -15
+	var _ int = 0723
+	var _ int = 0x32fa2c75
 
 	// 실수
 	// 고정 소수점
-	var f1 float32 = 0.2
-	var f2 float32 = .35
-	var f3 float32 = 132.73287
+	var _ float32 = 0.2
+	var _ float32 = .35
+	var _ float32 = 132.73287
 
 	// 부동 소수점 방식
-	var f4 float32 = 1e7
-	var f5 float32 = .12345E+2
-	var f6 float32 = 5.32521e-10
+	var _ float32 = 1e7
+	var _ float32 = .12345E+2
+	var _ float32 = 5.32521e-10
 
 	// go 언어 머신 엡실론
-	const epsilon := 1e-14
+	//const epsilon := 1e-14
 
 }
