@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	study.Map()
+	// study.Map()
+	study.LearningFormat()
 }
